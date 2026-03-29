@@ -462,7 +462,7 @@ export default function BuilderPage() {
       </header>
 
       <div className="flex flex-1">
-        <div className={`w-full overflow-y-auto p-6 md:w-1/2 ${showPreview ? "hidden md:block" : ""}`}>
+        <div className={`w-full overflow-y-auto p-6 md:w-1/2 relative z-50 ${showPreview ? "hidden md:block" : ""}`}>
           <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {STEPS.map((s, i) => (
               <button key={i} onClick={() => setStep(i)}
@@ -494,8 +494,18 @@ export default function BuilderPage() {
           <div className="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0a] px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Live Preview — Exactly how your portfolio will look
           </div>
-          <div className="h-[calc(100vh-110px)] overflow-y-auto bg-[#0a0e17]">
-            <PortfolioTemplate data={mapToTemplateData(data)} />
+          <div className="h-[calc(100vh-110px)] overflow-hidden bg-[#0a0e17] relative">
+            <div
+              className="w-full h-full overflow-y-auto"
+              style={{
+                transform: "scale(0.5)",
+                transformOrigin: "top left",
+                width: "200%",
+                height: "200%",
+              }}
+            >
+              <PortfolioTemplate data={mapToTemplateData(data)} />
+            </div>
           </div>
         </div>
       </div>
