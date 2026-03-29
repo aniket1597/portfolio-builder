@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --font-outfit: 'Outfit', sans-serif;
+  --color-primary: #007bff;
+  --color-primary-dark: #4facfe;
+  --color-bg-light: #e6f0ff;
+  --color-bg-dark: #111;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-outfit), sans-serif;
+  }
+}
