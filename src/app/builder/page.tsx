@@ -11,7 +11,13 @@ import {
   Education,
 } from "@/lib/types";
 import { savePortfolio } from "@/lib/storage";
-import PortfolioPreview from "@/components/PortfolioPreview";
+import { mapToTemplateData } from "@/lib/mapData";
+import dynamic from "next/dynamic";
+
+const PortfolioTemplate = dynamic(
+  () => import("@/portfolio-template/PortfolioTemplate"),
+  { ssr: false }
+);
 
 const STEPS = [
   "Basic Info",
@@ -747,15 +753,17 @@ export default function BuilderPage() {
           </div>
         </div>
 
-        {/* Preview panel */}
+        {/* Preview panel - renders the REAL 3D portfolio template */}
         <div
           className={`w-full border-l border-white/5 md:block md:w-1/2 ${showPreview ? "" : "hidden"}`}
         >
-          <div className="sticky top-0 border-b border-white/5 bg-[#0a0a0a] px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Live Preview
+          <div className="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0a] px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Live Preview — Exactly how your portfolio will look
           </div>
-          <div className="h-[calc(100vh-110px)] overflow-y-auto bg-[#0a0a0a]">
-            <PortfolioPreview data={data} isPreview={true} />
+          <div className="h-[calc(100vh-110px)] overflow-y-auto bg-[#0a0e17]">
+            <div style={{ transform: "scale(1)", transformOrigin: "top left", width: "100%", minHeight: "100%" }}>
+              <PortfolioTemplate data={mapToTemplateData(data)} />
+            </div>
           </div>
         </div>
       </div>
