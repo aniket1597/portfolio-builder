@@ -7,6 +7,19 @@ export function mapToTemplateData(d: PortfolioData): PortfolioUserData {
   const lastName = nameParts.slice(1).join(" ") || "Name";
   const initials = (firstName[0] || "") + (lastName[0] || "");
 
+  // Map icon names to template icon keys
+  const iconMap: Record<string, string> = {
+    FaLinkedinIn: "linkedin",
+    FaGithub: "github",
+    FaTwitter: "twitter",
+    FaInstagram: "instagram",
+    FaFacebook: "facebook",
+    FaYoutube: "youtube",
+    FaMedium: "medium",
+    FaStackOverflow: "stackoverflow",
+    SiSap: "sap",
+  };
+
   return {
     fullName: d.fullName || "Your Name",
     firstName,
@@ -45,15 +58,16 @@ export function mapToTemplateData(d: PortfolioData): PortfolioUserData {
       bg: d.accentColor || "#8FAADC",
       fg: "#FFFFFF",
     })),
-    socialLinks: [
-      ...(d.linkedin ? [{ platform: "LinkedIn", url: d.linkedin, icon: "linkedin" }] : []),
-      ...(d.github ? [{ platform: "GitHub", url: d.github, icon: "github" }] : []),
-    ],
-    resumeUrl: undefined,
-    contactLinks: [
-      ...(d.linkedin ? [{ label: "LinkedIn", url: d.linkedin }] : []),
-      ...(d.github ? [{ label: "GitHub", url: d.github }] : []),
-    ],
+    socialLinks: (d.socialLinks || []).map((link) => ({
+      platform: link.platform,
+      url: link.url,
+      icon: iconMap[link.icon] || "linkedin",
+    })),
+    resumeUrl: d.resumeUrl,
+    contactLinks: (d.socialLinks || []).map((link) => ({
+      label: link.platform,
+      url: link.url,
+    })),
     education: d.education?.[0] ? d.education[0].degree : d.dob || undefined,
     copyright: new Date().getFullYear().toString(),
     accentColor: d.accentColor || "#5eead4",

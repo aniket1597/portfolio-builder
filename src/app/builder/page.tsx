@@ -21,6 +21,7 @@ const PortfolioTemplate = dynamic(
 
 const STEPS = [
   "Basic Info",
+  "URLs",
   "About",
   "What I Do",
   "Career",
@@ -357,11 +358,68 @@ export default function BuilderPage() {
             <InputField label="Tagline" value={data.tagline} onChange={(v) => update("tagline", v)} placeholder="SAP Consultant | Data Architect" />
             <InputField label="Email" value={data.email} onChange={(v) => update("email", v)} placeholder="you@example.com" type="email" />
             <InputField label="Phone" value={data.phone} onChange={(v) => update("phone", v)} placeholder="+353 1 234 5678" />
-            <InputField label="GitHub URL" value={data.github} onChange={(v) => update("github", v)} placeholder="https://github.com/username" />
-            <InputField label="LinkedIn URL" value={data.linkedin} onChange={(v) => update("linkedin", v)} placeholder="https://linkedin.com/in/username" />
           </div>
         );
       case 1:
+        return (
+          <div className="space-y-4">
+            <div>
+              <label className={labelClass}>Social Media Links</label>
+              <p className="text-xs text-gray-500 mb-3">Add your social media profiles. These will appear on your portfolio sidebar with icons.</p>
+              <div className="space-y-3">
+                {data.socialLinks.map((link, i) => (
+                  <div key={i} className="flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-800/30 p-3">
+                    <span className="text-sm text-gray-400 w-20">{link.platform}</span>
+                    <input
+                      type="url"
+                      value={link.url}
+                      onChange={(e) => {
+                        const newLinks = [...data.socialLinks];
+                        newLinks[i].url = e.target.value;
+                        update("socialLinks", newLinks);
+                      }}
+                      placeholder="https://..."
+                      className={`flex-1 ${inputClass}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => update("socialLinks", data.socialLinks.filter((_, idx) => idx !== i))}
+                      className="text-red-400 hover:text-red-300 font-bold px-2"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { name: "LinkedIn", icon: "FaLinkedinIn" },
+                    { name: "GitHub", icon: "FaGithub" },
+                    { name: "Twitter", icon: "FaTwitter" },
+                    { name: "Instagram", icon: "FaInstagram" },
+                    { name: "Facebook", icon: "FaFacebook" },
+                    { name: "YouTube", icon: "FaYoutube" },
+                    { name: "Medium", icon: "FaMedium" },
+                    { name: "Stack Overflow", icon: "FaStackOverflow" },
+                  ].map((platform) => {
+                    const exists = data.socialLinks.some((l) => l.platform === platform.name);
+                    if (exists) return null;
+                    return (
+                      <button
+                        key={platform.name}
+                        type="button"
+                        onClick={() => update("socialLinks", [...data.socialLinks, { platform: platform.name, url: "", icon: platform.icon }])}
+                        className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-xs font-semibold text-gray-300 hover:bg-gray-700 transition"
+                      >
+                        + {platform.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 2:
         return (
           <div>
             <label className={labelClass}>About You</label>
@@ -374,7 +432,7 @@ export default function BuilderPage() {
             />
           </div>
         );
-      case 2:
+      case 3:
         return (
           <WhatIDoInput
             items={data.whatIDo}
@@ -382,7 +440,7 @@ export default function BuilderPage() {
             onRemove={(i) => update("whatIDo", data.whatIDo.filter((_, idx) => idx !== i))}
           />
         );
-      case 3:
+      case 4:
         return (
           <CareerInput
             items={data.career}
@@ -390,7 +448,7 @@ export default function BuilderPage() {
             onRemove={(i) => update("career", data.career.filter((_, idx) => idx !== i))}
           />
         );
-      case 4:
+      case 5:
         return (
           <EducationInput
             items={data.education}
@@ -398,7 +456,7 @@ export default function BuilderPage() {
             onRemove={(i) => update("education", data.education.filter((_, idx) => idx !== i))}
           />
         );
-      case 5:
+      case 6:
         return (
           <ProjectInput
             items={data.projects}
@@ -406,7 +464,7 @@ export default function BuilderPage() {
             onRemove={(i) => update("projects", data.projects.filter((_, idx) => idx !== i))}
           />
         );
-      case 6:
+      case 7:
         return (
           <div className="space-y-6">
             <ListInput label="Certifications & Workshops" items={data.certifications}
@@ -423,28 +481,59 @@ export default function BuilderPage() {
               onRemove={(i) => update("softSkills", data.softSkills.filter((_, idx) => idx !== i))} />
           </div>
         );
-      case 7:
+      case 8:
         return (
-          <div className="space-y-4">
-            <InputField label="Location" value={data.address} onChange={(v) => update("address", v)} placeholder="Dublin, Ireland" />
-            <InputField label="Education Highlight" value={data.dob} onChange={(v) => update("dob", v)} placeholder="MSc in Cloud Computing" />
-            <InputField label="Nationality" value={data.nationality} onChange={(v) => update("nationality", v)} placeholder="Indian" />
-            <InputField label="Languages" value={data.languages} onChange={(v) => update("languages", v)} placeholder="English, Hindi" />
+          <div className="space-y-6">
             <div>
-              <label className={labelClass}>Accent Color</label>
-              <div className="flex items-center gap-3">
-                <input type="color" value={data.accentColor} onChange={(e) => update("accentColor", e.target.value)} className="h-10 w-14 cursor-pointer rounded border border-gray-700 bg-transparent" />
-                <span className="text-sm text-gray-400">{data.accentColor}</span>
+              <label className={labelClass}>Upload Resume (PDF)</label>
+              <p className="text-xs text-gray-500 mb-3">Visitors can download your resume from the portfolio sidebar.</p>
+              <div className="rounded-lg border border-dashed border-gray-600 p-4">
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file && file.type === "application/pdf") {
+                      const reader = new FileReader();
+                      reader.onload = (event) => {
+                        const result = event.target?.result as string;
+                        update("resumeUrl", result);
+                        update("resumeName", file.name);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="block w-full text-sm text-gray-400 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-500"
+                />
+                {data.resumeName && (
+                  <div className="mt-2 flex items-center gap-2 text-sm text-green-400">
+                    <span>✓</span>
+                    <span>{data.resumeName}</span>
+                  </div>
+                )}
               </div>
             </div>
-            <div>
-              <label className={labelClass}>Username *</label>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">portfolioforge.com/p/</span>
-                <input type="text" value={data.username}
-                  onChange={(e) => update("username", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
-                  placeholder="yourname"
-                  className={`flex-1 ${inputClass}`} />
+            <div className="space-y-4">
+              <InputField label="Location" value={data.address} onChange={(v) => update("address", v)} placeholder="Dublin, Ireland" />
+              <InputField label="Education Highlight" value={data.dob} onChange={(v) => update("dob", v)} placeholder="MSc in Cloud Computing" />
+              <InputField label="Nationality" value={data.nationality} onChange={(v) => update("nationality", v)} placeholder="Indian" />
+              <InputField label="Languages" value={data.languages} onChange={(v) => update("languages", v)} placeholder="English, Hindi" />
+              <div>
+                <label className={labelClass}>Accent Color</label>
+                <div className="flex items-center gap-3">
+                  <input type="color" value={data.accentColor} onChange={(e) => update("accentColor", e.target.value)} className="h-10 w-14 cursor-pointer rounded border border-gray-700 bg-transparent" />
+                  <span className="text-sm text-gray-400">{data.accentColor}</span>
+                </div>
+              </div>
+              <div>
+                <label className={labelClass}>Username *</label>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">portfolioforge.com/p/</span>
+                  <input type="text" value={data.username}
+                    onChange={(e) => update("username", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
+                    placeholder="yourname"
+                    className={`flex-1 ${inputClass}`} />
+                </div>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import { lazy, Suspense } from "react";
-import "./App.css";
 import "./index.css";
+import "./App.css";
 import { LoadingProvider } from "./context/LoadingProvider";
 import { PortfolioDataProvider, PortfolioUserData } from "./context/PortfolioDataContext";
 

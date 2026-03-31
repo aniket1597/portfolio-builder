@@ -2,6 +2,11 @@ import {
   FaLinkedinIn,
   FaGithub,
   FaTwitter,
+  FaInstagram,
+  FaFacebook,
+  FaYoutube,
+  FaMedium,
+  FaStackOverflow,
 } from "react-icons/fa6";
 import { SiSap } from "react-icons/si";
 import { MdLanguage } from "react-icons/md";
@@ -15,6 +20,11 @@ const iconMap: Record<string, React.ReactNode> = {
   linkedin: <FaLinkedinIn />,
   github: <FaGithub />,
   twitter: <FaTwitter />,
+  instagram: <FaInstagram />,
+  facebook: <FaFacebook />,
+  youtube: <FaYoutube />,
+  medium: <FaMedium />,
+  stackoverflow: <FaStackOverflow />,
   sap: <SiSap />,
   default: <MdLanguage />,
 };

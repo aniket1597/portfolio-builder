@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import Cursor from "./Cursor";
 import setSplitText from "./utils/splitText";
+import { usePortfolioData } from "../context/PortfolioDataContext";
 
 const About = lazy(() => import("./About"));
 const WhatIDo = lazy(() => import("./WhatIDo"));
@@ -13,11 +14,16 @@ const Contact = lazy(() => import("./Contact"));
 const TechStack = lazy(() => import("./TechStack"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
+  const data = usePortfolioData();
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
     window.innerWidth > 1024
   );
 
   useEffect(() => {
+    // Set CSS variables from user data
+    document.documentElement.style.setProperty('--accentColor', data.accentColor);
+    document.documentElement.style.setProperty('--backgroundColor', data.backgroundColor);
+    
     let resizeTimer: number;
     const resizeHandler = () => {
       clearTimeout(resizeTimer);
@@ -35,7 +41,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       window.removeEventListener("resize", resizeHandler);
       clearTimeout(resizeTimer);
     };
-  }, []);
+  }, [data.accentColor, data.backgroundColor]);
 
   return (
     <div className="container-main">

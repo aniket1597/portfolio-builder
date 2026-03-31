@@ -28,6 +28,7 @@ export interface Education {
 export interface SocialLink {
   platform: string;
   url: string;
+  icon: string;
 }
 
 export interface PortfolioData {
@@ -39,6 +40,9 @@ export interface PortfolioData {
   phone: string;
   github: string;
   linkedin: string;
+
+  // URLs / Social Media (multiple links with icons)
+  socialLinks: SocialLink[];
 
   // About
   about: string;
@@ -63,15 +67,16 @@ export interface PortfolioData {
   certifications: string[];
   awards: string[];
 
-  // Social
-  socialLinks: SocialLink[];
-
   // Contact
   address: string;
   dob: string;
   nationality: string;
   hobbies: string;
   languages: string;
+
+  // Resume
+  resumeUrl?: string;
+  resumeName?: string;
 
   // Customization
   accentColor: string;
@@ -86,6 +91,7 @@ export const defaultPortfolio: PortfolioData = {
   phone: "",
   github: "",
   linkedin: "",
+  socialLinks: [],
   about: "",
   whatIDo: [],
   career: [],
@@ -95,12 +101,13 @@ export const defaultPortfolio: PortfolioData = {
   projects: [],
   certifications: [],
   awards: [],
-  socialLinks: [],
   address: "",
   dob: "",
   nationality: "",
   hobbies: "",
   languages: "",
+  resumeUrl: undefined,
+  resumeName: undefined,
   accentColor: "#007bff",
   username: "",
 };

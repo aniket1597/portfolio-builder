@@ -106,7 +106,7 @@ body {
 .techstack {
   width: 100%;
   position: relative;
-  overflow: clip;
+  overflow: visible;
   height: var(--vh);
   margin: auto;
   margin-top: 50px;
@@ -118,10 +118,11 @@ body {
   text-align: center;
   position: absolute;
   width: 100%;
-  top: 120px;
+  top: 150px;
   left: 0;
   font-weight: 400;
   text-transform: uppercase;
+  z-index: 100;
 }
 
 @media screen and (min-width: 768px) {
