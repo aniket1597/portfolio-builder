@@ -1,5 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 
+/* Undo Tailwind preflight resets for portfolio template elements */
+.container-main *,
+.container-main *::before,
+.container-main *::after {
+  border-style: none;
+}
+
+.container-main h1,
+.container-main h2,
+.container-main h3,
+.container-main h4,
+.container-main h5,
+.container-main h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.container-main img,
+.container-main svg,
+.container-main video,
+.container-main canvas {
+  display: inline;
+  max-width: none;
+}
+
+.container-main a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 :root {
   font-family: "Geist", sans-serif;
 
