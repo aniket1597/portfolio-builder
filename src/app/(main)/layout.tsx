@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Create a stunning developer portfolio without writing a single line of code. Fill in your details, preview live, and publish instantly.",
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
